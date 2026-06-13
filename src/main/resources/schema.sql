@@ -17,6 +17,7 @@ CREATE TABLE app_user (
     email          VARCHAR(120) NOT NULL,
     display_name   VARCHAR(80)  NOT NULL,
     monthly_budget DECIMAL(8,2) NOT NULL DEFAULT 0.00,
+    notify_by_email BOOLEAN     NOT NULL DEFAULT TRUE,
     created_at     DATE         NOT NULL,
     CONSTRAINT pk_app_user PRIMARY KEY (user_id),
     CONSTRAINT uq_app_user_email UNIQUE (email),
@@ -82,6 +83,8 @@ CREATE TABLE notification (
     message         VARCHAR(255) NOT NULL,
     created_at      DATETIME     NOT NULL,
     is_read         BOOLEAN      NOT NULL DEFAULT FALSE,
+    email_sent      BOOLEAN      NOT NULL DEFAULT FALSE,
+    email_sent_at   DATETIME     NULL,
     CONSTRAINT pk_notification PRIMARY KEY (notification_id),
     CONSTRAINT fk_notif_sub FOREIGN KEY (subscription_id)
         REFERENCES subscription (subscription_id)
